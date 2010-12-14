@@ -1,0 +1,19 @@
+<plugin name='lesscss' version='0.9' grailsVersion='1.3.2 &gt; *'>
+  <author>David Marquis</author>
+  <authorEmail>davidmarquis@me.com</authorEmail>
+  <title>Less CSS</title>
+  <description>\
+Integration of the Less CSS framework into Grails. Less (lesscss.org) is what CSS should have always
+been. The plug-in allows for automatic compilation of .less files into .css files, as well as
+tools for easier development (such as auto-reload of CSS after changes in development environment).
+</description>
+  <documentation>http://grails.org/plugin/grails-lesscss</documentation>
+  <resources>
+    <resource>BuildConfig</resource>
+    <resource>DataSource</resource>
+    <resource>UrlMappings</resource>
+    <resource>grails.lesscss.LessTagLib</resource>
+  </resources>
+  <dependencies />
+  <behavior />
+</plugin>
