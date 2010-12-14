@@ -30,8 +30,8 @@ Then, in your GSP files:
 
 ## <ui:less> tag
 
-Outputs the correct <link> element to include your LESS stylesheet. The included file's extension is
-determined at runtime and depends on the environment.
+Outputs the correct `<link>` HTML element to include your LESS stylesheet.
+The included file's extension is determined at runtime and depends on the environment.
 
 Attributes:
 
