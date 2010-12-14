@@ -9,7 +9,7 @@ class LesscssGrailsPlugin {
     def pluginExcludes = [
             "grails-app/views/error.gsp"
     ]
-    def loadAfter = ['ui-performance']
+    def loadAfter = []
 
     def author = "David Marquis"
     def authorEmail = "davidmarquis@me.com"
