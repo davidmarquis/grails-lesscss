@@ -30,23 +30,24 @@ Then, in your GSP files:
 
 ## <ui:less> tag
 
-Output correct <link> element to include your LESS stylesheet. The file extension is determined at runtime
-and depends on the environment.
+Outputs the correct <link> element to include your LESS stylesheet. The included file's extension is
+determined at runtime and depends on the environment.
 
 Attributes:
 
-  * name (required): The name of the stylesheet file, without the .less extension (the correct extension will be dynamically
+  * `name` (required): The name of the stylesheet file, without the .less extension (the correct extension will be dynamically
   set at runtime depending on the environment.
-  * dir (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
-  * plugin (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
-  * absolute (optional): Should the 'src' generated be absolute or relative? (default: false)
+  * `dir` (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
+  * `plugin` (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
+  * `absolute` (optional): Should the 'src' generated be absolute or relative? (default: false)
 
-When in development, the <link> will link directly to the .less file. For other environments, the <link>
-will directly link to the static .css file compiled at WAR generation time.
+When in development, the generated `<link>` will link directly to the .less file.
+For other environments, the <link> will directly link to the corresponding static .css file
+compiled at WAR generation time.
 
 ## <ui:lessScripts> tag
 
-This is required to support in-browser compilation of .less files.
+Output the other scripts required for in-browser compilation of .less files and auto-reloading.
 The tag will only output something when in development mode.
 
 
