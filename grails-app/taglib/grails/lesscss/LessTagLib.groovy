@@ -4,18 +4,38 @@ import grails.util.Environment
 import groovy.xml.MarkupBuilder
 import com.github.grails.lesscss.Constants
 import org.codehaus.groovy.grails.plugins.GrailsPluginManager
+import org.codehaus.groovy.grails.commons.GrailsApplication
 
 class LessTagLib {
 
-    static namespace = "ui"
+    static namespace = "less"
 
+    GrailsApplication grailsApplication
     GrailsPluginManager pluginManager
 
     /**
-     * If in development environment, this tag will generate links to
+     * If in development environment, this tag will generate links to .less stylesheets directly.
+     * Otherwise, it will generate links to statically compiled CSS files of the same name. These
+     * files are generated at WAR-packaging time.
+     *
+     * Attributes:
+     *
+     * name: name of stylesheet to include (without the file extension, which will be filled depending
+     *        on the context
+     * dir: name of the directory (relative to /web-app) that contains the .less file. Defaults to 'css'.
+     * plugin: name of the plugin into which the .less file resides (defaults to none, meaning current app)
+     * absolute: whether to generate a fully absolute href URL for the stylesheet.
+     * bundled: (true/false) whether the stylesheet is part of a bundle or not. When this is the case,
+     *                        no <link> element will be output when running in production. We assume that
+     *                        the final stylesheet is part of a bundle included by another plug-in (such
+     *                        as ui-performance)
+     *
      */
-    def less = { attrs, body ->
+    def stylesheet = { attrs, body ->
 
+        if (shouldSkipLink(attrs)) {
+            return
+        }
 
 		String name = attrs.remove('name')
 		if (!name) {
@@ -24,8 +44,8 @@ class LessTagLib {
 
         String rel, fileType, link, html
         String dir = attrs.remove('dir') ?: 'css';
-        if (isUsingAutoReload()) {
-            // reference .less files directly (less.js will automatically compile css)
+        if (isUsingAutoCompile()) {
+            // reference .less files directly (less.js will automatically compile into CSS)
             rel = 'stylesheet/less'
             fileType = '.less'
         } else {
@@ -42,33 +62,43 @@ class LessTagLib {
         mkp.link(params)
 	}
 
-    def lessScripts = { attrs, body ->
+    def scripts = { attrs, body ->
 
-        if (isUsingAutoReload()) {
+        if (isUsingAutoCompile()) {
             String src = generateRelativePath('js', Constants.LESS_SCRIPT_NAME, '.js', "lesscss", false)
 
             out << "<script type=\"text/javascript\" src=\"${src}\"></script>"
+
+            if (isUsingAutoReload()) {
+                out << '''
+                        <script type="text/javascript">
+                            less.env = "development";
+                            less.watch();
+                        </script>
+                        '''
+            }
         }
+    }
 
-        if (isWatching()) {
-            out << '''
-                    <script type="text/javascript">
-                        less.env = "development";
-                        less.watch();
-                    </script>
-                    '''
+    /**
+     * When 'bundled' attribute is specified, we will not output links when running in a WAR.
+     */
+    private boolean shouldSkipLink(def attrs) {
+        if ("true" == attrs.remove("bundled")) {
+            return grailsApplication.isWarDeployed()
         }
+        return false
     }
 
-    protected boolean isUsingAutoReload() {
-        return Environment.isDevelopmentMode()
+    private boolean isUsingAutoCompile() {
+        return !grailsApplication.isWarDeployed()
     }
 
-    protected boolean isWatching() {
-        return Environment.isDevelopmentMode()
+    private boolean isUsingAutoReload() {
+        return true //todo: this could be configurable
     }
 
-    protected String generateExtraAttributes(attrs) {
+    private String generateExtraAttributes(attrs) {
 
 		def extra = ""
 
@@ -79,7 +109,7 @@ class LessTagLib {
 		return extra
 	}
 
-    protected String generateRelativePath(dir, name, extension, plugin, absolute) {
+    private String generateRelativePath(dir, name, extension, plugin, absolute) {
 		if ('true' == absolute) {
 			return name
 		}

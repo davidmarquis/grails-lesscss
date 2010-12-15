@@ -24,11 +24,11 @@ First install it:
 
 Then, in your GSP files:
 
-    <ui:less name="your_stylesheet" />
-    <ui:lessScripts />
+    <less:stylesheet name="your_stylesheet" />
+    <less:scripts />
 
 
-## <ui:less> tag
+## <less:stylesheet> tag
 
 Outputs the correct `<link>` HTML element to include your LESS stylesheet.
 The included file's extension is determined at runtime and depends on the environment.
@@ -40,12 +40,15 @@ Attributes:
   * `dir` (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
   * `plugin` (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
   * `absolute` (optional): Should the 'src' generated be absolute or relative? (default: false)
+  * `bundled` (optional): Is the stylesheet part of a bundle. If that is the case, then it is assumed that
+  the stylesheet is already included when running the application as a WAR. This is useful fo
+  integration with ui-performance plug-in that creates (and references) bundles of multiple CSS files.
 
 When in development, the generated `<link>` will link directly to the .less file.
 For other environments, the <link> will directly link to the corresponding static .css file
 compiled at WAR generation time.
 
-## <ui:lessScripts> tag
+## <less:scripts> tag
 
 Output the other scripts required for in-browser compilation of .less files and auto-reloading.
 The tag will only output something when in development mode.
