@@ -36,7 +36,7 @@ The included file's extension is determined at runtime and depends on the enviro
 Attributes:
 
   * `name` (required): The name of the stylesheet file, without the .less extension (the correct extension will be dynamically
-  set at runtime depending on the environment.
+  set at runtime depending on the environment).
   * `dir` (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
   * `plugin` (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
   * `absolute` (optional): Should the 'src' generated be absolute or relative? (default: false)
@@ -45,13 +45,26 @@ Attributes:
   integration with ui-performance plug-in that creates (and references) bundles of multiple CSS files.
 
 When in development, the generated `<link>` will link directly to the .less file.
-For other environments, the <link> will directly link to the corresponding static .css file
+For other environments, the `<link>` element will directly link to the corresponding static .css file
 compiled at WAR generation time.
 
 ## <less:scripts> tag
 
-Output the other scripts required for in-browser compilation of .less files and auto-reloading.
-The tag will only output something when in development mode.
+Output the Javascripts required for in-browser compilation of .less files and auto-reloading.
+The tag will only output something when not running in a WAR (such as in development).
+
+# Play nicely with ui-performance
+
+In order for the plug-in to collaborate with ui-performance, the following elements must be taken
+into consideration:
+
+ * Since ui-performance minifies and bundles CSS files (and not LESS files), it must run after the lesscss plug-in has
+ compiled CSS file during the WAR generation process.
+ * In order for the bundles to work correctly in the different environments, you must define a different
+ bundle configuration in 'development' environment: the Less-managed stylesheet must *not* be configured in
+ development, because it would result in continuous 404 errors (the .css file being non existent in dev).
+ I suggest having two set of configurations for bundles: one for local development and another for the other
+ environment (which will contain references to Less-generated CSS stylesheets).
 
 
 # Thanks
