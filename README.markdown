@@ -10,8 +10,9 @@ It has the following features:
 
 ### When deploying:
  * Statically compiles .less files into .css and bundles the generated CSS in the final WAR.
+ * Because the generated CSS files are referenced directly, there is absolutely no performance hit in production.
 
-Documentation on LESS: [lesscss.org](http://lesscss.org)
+Documentation on LESS syntax and features: [lesscss.org](http://lesscss.org)
 
 
 # How to use it?
@@ -24,8 +25,12 @@ First install it:
 
 Then, in your GSP files:
 
-    <less:stylesheet name="your_stylesheet" />
-    <less:scripts />
+    <html>
+    <head>
+        ...
+        <less:stylesheet name="your_stylesheet" />
+        <less:scripts />
+    </head>
 
 
 ## <less:stylesheet> tag
@@ -50,7 +55,7 @@ compiled at WAR generation time.
 
 ## <less:scripts> tag
 
-Output the Javascripts required for in-browser compilation of .less files and auto-reloading.
+Outputs the JS scripts required for in-browser compilation of .less files and auto-reloading.
 The tag will only output something when not running in a WAR (such as in development).
 
 # Play nicely with ui-performance
