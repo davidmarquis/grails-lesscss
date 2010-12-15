@@ -1,6 +1,8 @@
 # LESS plug-in for Grails
 
-This plug-in adds support for LESS CSS pre-processor to Grails.
+This plug-in adds support for LESS CSS pre-processor to Grails. Contrarily to some [previous attempt](http://johnnywey.wordpress.com/2010/03/02/grails-less-css-plugin/)
+at integrating LESS with Grails, this plug-in does not need a full JRuby stack to work. This is made possible due to the latest
+'less.js' full javascript rewrite of LESS.
 
 It has the following features:
 
@@ -66,10 +68,10 @@ into consideration:
  * Since ui-performance minifies and bundles CSS files (and not LESS files), it must run after the lesscss plug-in has
  compiled CSS file during the WAR generation process.
  * In order for the bundles to work correctly in the different environments, you must define a different
- bundle configuration in 'development' environment: the Less-managed stylesheet must *not* be configured in
+ bundle configuration in 'development' environment: the LESS-managed stylesheet must *not* be configured in
  development, because it would result in continuous 404 errors (the .css file being non existent in dev).
  I suggest having two set of configurations for bundles: one for local development and another for the other
- environment (which will contain references to Less-generated CSS stylesheets).
+ environment (which will contain references to LESS-generated CSS stylesheets).
 
 
 # Thanks
