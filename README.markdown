@@ -72,6 +72,18 @@ into consideration:
  development, because it would result in continuous 404 errors (the .css file being non existent in dev).
  I suggest having two set of configurations for bundles: one for local development and another for the other
  environment (which will contain references to LESS-generated CSS stylesheets).
+ * The Mozilla Rhino dependency that this plug-in declares clashes with the Rhino distribution that comes
+ with ui-performance (from YUI compressor). If you get a weird unexplainable error at minification time when packaging
+ your WAR, try excluding the Rhino dependency from the plug-in (be careful to set the right plug-in version):
+
+    *** /grails-app/conf/BuildConfig.groovy
+    dependencies {
+        plugins {
+            runtime( ":lesscss:0.9.2" ) {
+                excludes "js"
+            }
+        }
+    }
 
 
 # Thanks
