@@ -80,7 +80,7 @@ into consideration:
 
      dependencies {
         plugins {
-            runtime( ":lesscss:0.9.2" ) {
+            build( ":lesscss:0.9.2" ) {
                 excludes "js"
             }
         }
