@@ -1,7 +1,7 @@
 # LESS plug-in for Grails
 
 This plug-in adds support for LESS CSS pre-processor to Grails. Contrarily to some [previous attempt](http://johnnywey.wordpress.com/2010/03/02/grails-less-css-plugin/)
-at integrating LESS with Grails, this plug-in does not need a full JRuby stack to work. This is made possible due to the latest
+at integrating LESS with Grails, this plug-in does not need a full JRuby stack to work. This is made possible due to the ongoing
 'less.js' full javascript rewrite of LESS.
 
 It has the following features:
@@ -38,7 +38,11 @@ Then, in your GSP files:
 ## <less:stylesheet> tag
 
 Outputs the correct `<link>` HTML element to include your LESS stylesheet.
+
 The included file's extension is determined at runtime and depends on the environment.
+When in development, the generated `<link>` will link directly to the .less file.
+For other environments, the `<link>` element will directly link to the corresponding static .css file
+compiled at WAR generation time.
 
 Attributes:
 
@@ -47,13 +51,9 @@ Attributes:
   * `dir` (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
   * `plugin` (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
   * `absolute` (optional): Should the 'src' generated be absolute or relative? (default: false)
-  * `bundled` (optional): Is the stylesheet part of a bundle. If that is the case, then it is assumed that
-  the stylesheet is already included when running the application as a WAR. This is useful fo
-  integration with ui-performance plug-in that creates (and references) bundles of multiple CSS files.
-
-When in development, the generated `<link>` will link directly to the .less file.
-For other environments, the `<link>` element will directly link to the corresponding static .css file
-compiled at WAR generation time.
+  * `bundled` (optional): Is the stylesheet part of a bundle? This is useful for integration with ui-performance
+  plug-in that bundles multiple CSS files in one file in production. If the stylesheet you're referencing is part of one such bundle,
+  then it does not need to be referenced by this tag when running in a WAR. In this particular case, the tag will not output anything.
 
 ## <less:scripts> tag
 
