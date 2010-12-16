@@ -76,7 +76,8 @@ into consideration:
  with ui-performance (from YUI compressor). If you get a weird unexplainable error at minification time when packaging
  your WAR, try excluding the Rhino dependency from the plug-in (be careful to set the right plug-in version):
 
-    > /grails-app/conf/BuildConfig.groovy
+    In /grails-app/conf/BuildConfig.groovy:
+
     dependencies {
         plugins {
             runtime( ":lesscss:0.9.2" ) {
