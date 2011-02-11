@@ -9,27 +9,27 @@ class LessEngineHelper {
         println "Compiling LESS files from dir ${stagingDir}"
 
         LessEngine engine = new LessEngine()
-
+        def lessFiles = []
+        
         stagingDir.eachFileRecurse { file ->
 
-			if (file.directory) {
-				return
-			}
+            if (file.directory) {
+              return
+            }
 
             if (file.name.toLowerCase().endsWith(Constants.LESS_EXTENSION)) {
-
                 def input = file
                 def output = getOutputFile(file)
-
-                println "Compiling LESS file [${input}] into [${output}]"
-
-                engine.compile input, output
-                filterFileContent output
-
-                input.delete()
+                
+                if (!lessFiles.contains(input)) {
+                    println "Compiling LESS file [${input}] into [${output}]"
+                    engine.compile input, output
+                    filterFileContent output
+                    lessFiles.add(input)
+                }
             }
-		}
-
+        }
+        removeLessFiles(lessFiles)
     }
 
     private File getOutputFile(File input) {
@@ -46,5 +46,8 @@ class LessEngineHelper {
 
         file.write(text)
     }
-
+    
+    private void removeLessFiles(lessFiles) {
+      lessFiles.each{ file -> file.delete() }
+    }
 }
