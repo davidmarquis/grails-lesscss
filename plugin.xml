@@ -7,7 +7,7 @@ Integration of the Less CSS framework into Grails. Less (lesscss.org) is what CS
 been. The plug-in allows for automatic compilation of .less files into .css files, as well as
 tools for easier development (such as auto-reload of CSS after changes in development environment).
 </description>
-  <documentation>http://grails.org/plugin/grails-lesscss</documentation>
+  <documentation>http://grails.org/plugin/lesscss</documentation>
   <resources>
     <resource>BuildConfig</resource>
     <resource>DataSource</resource>

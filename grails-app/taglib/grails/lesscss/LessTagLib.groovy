@@ -37,10 +37,10 @@ class LessTagLib {
             return
         }
 
-		String name = attrs.remove('name')
-		if (!name) {
-			throwTagError("Tag [less] is missing required attribute [name]")
-		}
+        String name = attrs.remove('name')
+            if (!name) {
+              throwTagError("Tag [less] is missing required attribute [name]")
+        }
 
         String rel, fileType, link, html
         String dir = attrs.remove('dir') ?: 'css';
@@ -50,17 +50,16 @@ class LessTagLib {
             fileType = '.less'
         } else {
             rel = 'stylesheet'
-		    fileType = '.css'
+            fileType = '.css'
         }
 
         link = generateRelativePath(dir, name, fileType, attrs.remove('plugin'), attrs.remove('absolute'))
-
 
         def mkp = new MarkupBuilder(out)
         def params = [rel: rel, type: 'text/css', href: link]
         params.putAll attrs
         mkp.link(params)
-	}
+    }
 
     def scripts = { attrs, body ->
 
@@ -69,13 +68,11 @@ class LessTagLib {
 
             out << "<script type=\"text/javascript\" src=\"${src}\"></script>"
 
-            if (isUsingAutoReload()) {
-                out << '''
-                        <script type="text/javascript">
-                            less.env = "development";
-                            less.watch();
-                        </script>
-                        '''
+            if (isUsingAutoReload(attrs.watch)) {
+              out << '''<script type="text/javascript">
+                          less.env = "development";
+                          less.watch();
+                        </script>'''
             }
         }
     }
@@ -94,32 +91,30 @@ class LessTagLib {
         return !grailsApplication.isWarDeployed()
     }
 
-    private boolean isUsingAutoReload() {
-        return true //todo: this could be configurable
+    private boolean isUsingAutoReload(watch) {
+        return (watch == null || watch == "true") ? true : false
     }
 
     private String generateExtraAttributes(attrs) {
 
-		def extra = ""
-
-		attrs.each { key, value ->
-			extra << " $key=\"$value\""
-		}
-
-		return extra
-	}
+        def extra = ""
+        attrs.each { key, value ->
+            extra << " $key=\"$value\""
+        }
+        return extra
+    }
 
     private String generateRelativePath(dir, name, extension, plugin, absolute) {
-		if ('true' == absolute) {
-			return name
-		}
+        if ('true' == absolute) {
+            return name
+        }
 
-		StringBuilder path = new StringBuilder()
-		path << g.resource(plugin:plugin, dir: dir, file: name)
-		if (extension) {
-			path << extension
-		}
+        StringBuilder path = new StringBuilder()
+        path << g.resource(plugin:plugin, dir: dir, file: name)
+        if (extension) {
+            path << extension
+        }
 
-		return path.toString().replaceAll('//', '/')
-	}
+        return path.toString().replaceAll('//', '/')
+    }
 }
