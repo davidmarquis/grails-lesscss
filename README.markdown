@@ -85,12 +85,13 @@ into consideration:
 
      dependencies {
         plugins {
-            build( ":lesscss:0.9.2" ) {
+            build( ":lesscss:$VERSION$" ) {
                 excludes "js"
             }
         }
      }
 
+     Where $VERSION$ corresponds to the exact version of the plug-in you're using.
 
 # Thanks
 
@@ -101,5 +102,10 @@ Version: 1.0.40
 
 The Java integration has been taken from Asual's fine [Java LESS engine wrapper](https://github.com/asual/lesscss-engine).
 Because it is in Javascript, the new less.js implementation can be run using Mozilla Rhino directly in the JVM.
+
+Other contributors:
+
+  * Maxime Lavoie
+  * Jorge Silveira
 
 # Enjoy responsibly!
