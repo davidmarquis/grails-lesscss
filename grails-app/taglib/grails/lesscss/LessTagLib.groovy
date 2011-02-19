@@ -68,7 +68,7 @@ class LessTagLib {
 
             out << "<script type=\"text/javascript\" src=\"${src}\"></script>"
 
-            if (isUsingAutoReload(attrs.watch)) {
+            if (isUsingAutoReload(attrs)) {
               out << '''<script type="text/javascript">
                           less.env = "development";
                           less.watch();
@@ -91,8 +91,9 @@ class LessTagLib {
         return !grailsApplication.isWarDeployed()
     }
 
-    private boolean isUsingAutoReload(watch) {
-        return (watch == null || watch == "true") ? true : false
+    private boolean isUsingAutoReload(attrs) {
+        def watch = attrs.watch
+        return (watch == null || watch == "true")
     }
 
     private String generateExtraAttributes(attrs) {

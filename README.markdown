@@ -60,6 +60,13 @@ Attributes:
 Outputs the JS scripts required for in-browser compilation of .less files and auto-reloading.
 The tag will only output something when not running in a WAR (such as in development).
 
+Attributes:
+
+  * `watch` (optional): Set to true if you want less.js to watch your local changes in development mode. It will
+  automatically reload and re-compile your LESS code when changes are made. No need to refresh the page in the browser.
+  A word of caution: This is known to cause browser storage capacity problems if you keep the page open for too long.
+  Defaults to false.
+
 # Play nicely with ui-performance
 
 In order for the plug-in to collaborate with ui-performance, the following elements must be taken
