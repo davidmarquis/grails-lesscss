@@ -21,9 +21,7 @@ Documentation on LESS syntax and features: [lesscss.org](http://lesscss.org)
 
 First install it:
 
-    grails install-plugin {path-to-the-plugin-zip-file}
-
-(The plug-in is not yet in the central Grails repository).
+    grails install-plugin lesscss
 
 Then, in your GSP files:
 
