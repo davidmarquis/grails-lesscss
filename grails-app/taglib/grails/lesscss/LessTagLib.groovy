@@ -111,7 +111,10 @@ class LessTagLib {
         }
 
         StringBuilder path = new StringBuilder()
-        path << g.resource(plugin:plugin, dir: dir, file: name)
+        if (plugin)
+            path << g.resource(plugin:plugin, dir: dir, file: name)
+        else
+            path << g.resource(contextPath:'', dir: dir, file: name)
         if (extension) {
             path << extension
         }
