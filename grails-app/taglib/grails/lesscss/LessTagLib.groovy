@@ -24,9 +24,8 @@ class LessTagLib {
      *        on the context
      * dir: name of the directory (relative to /web-app) that contains the .less file. Defaults to 'css'.
      * plugin: name of the plugin into which the .less file resides (defaults to none, meaning current app)
-     * contextPath: the context path to use (relative to the application context path). Defaults to "" if neither
-     *                        contextPath nor plugin attributes are defined. If plugin is defined, default to "" 
-     *                        or path to the plugin for a plugin view or template.
+     * contextPath: the context path to use (relative to the application context path). Defaults to "" if plugin 
+     *                        attribute is not defined.
      * absolute: whether to generate a fully absolute href URL for the stylesheet.
      * bundled: (true/false) whether the stylesheet is part of a bundle or not. When this is the case,
      *                        no <link> element will be output when running in production. We assume that
