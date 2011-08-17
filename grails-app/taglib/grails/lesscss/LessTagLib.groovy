@@ -24,6 +24,8 @@ class LessTagLib {
      *        on the context
      * dir: name of the directory (relative to /web-app) that contains the .less file. Defaults to 'css'.
      * plugin: name of the plugin into which the .less file resides (defaults to none, meaning current app)
+     * contextPath: the context path to use (relative to the application context path). Defaults to "" if plugin 
+     *                        attribute is not defined.
      * absolute: whether to generate a fully absolute href URL for the stylesheet.
      * bundled: (true/false) whether the stylesheet is part of a bundle or not. When this is the case,
      *                        no <link> element will be output when running in production. We assume that
@@ -53,7 +55,7 @@ class LessTagLib {
             fileType = '.css'
         }
 
-        link = generateRelativePath(dir, name, fileType, attrs.remove('plugin'), attrs.remove('absolute'))
+        link = generateRelativePath(dir, name, fileType, attrs.remove('plugin'), attrs.remove('contextPath'), attrs.remove('absolute'))
 
         def mkp = new MarkupBuilder(out)
         def params = [rel: rel, type: 'text/css', href: link]
@@ -105,13 +107,13 @@ class LessTagLib {
         return extra
     }
 
-    private String generateRelativePath(dir, name, extension, plugin, absolute) {
+    private String generateRelativePath(dir, name, extension, plugin, contextPath, absolute) {
         if ('true' == absolute) {
             return name
         }
 
         StringBuilder path = new StringBuilder()
-        path << g.resource(plugin:plugin, dir: dir, file: name)
+        path << g.resource(plugin:plugin ?: null, contextPath: contextPath ?: '', dir: dir, file: name)
         if (extension) {
             path << extension
         }
