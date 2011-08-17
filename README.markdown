@@ -48,6 +48,7 @@ Attributes:
   set at runtime depending on the environment).
   * `dir` (optional): the directory under `web-app` where the stylesheet file is located (default: 'css')
   * `plugin` (optional): the name of the plug-in into which the stylesheet is bundled (default: none)
+  * `contextPath`: the context path to use (relative to the application context path). Defaults to "" if plugin attribute is not defined.
   * `absolute` (optional): Should the 'src' generated be absolute or relative? (default: false)
   * `bundled` (optional): Is the stylesheet part of a bundle? This is useful for integration with ui-performance
   plug-in that bundles multiple CSS files in one file in production. If the stylesheet you're referencing is part of one such bundle,
@@ -106,5 +107,6 @@ Other contributors:
 
   * Maxime Lavoie
   * Jorge Silveira
+  * David Chau
 
 # Enjoy responsibly!
