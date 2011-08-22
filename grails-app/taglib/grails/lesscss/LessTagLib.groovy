@@ -66,7 +66,7 @@ class LessTagLib {
     def scripts = { attrs, body ->
 
         if (isUsingAutoCompile()) {
-            String src = generateRelativePath('js', Constants.LESS_SCRIPT_NAME, '.js', "lesscss", false)
+            String src = generateRelativePath('js', Constants.LESS_SCRIPT_NAME, '.js', "lesscss", "", false)
 
             out << "<script type=\"text/javascript\" src=\"${src}\"></script>"
 
