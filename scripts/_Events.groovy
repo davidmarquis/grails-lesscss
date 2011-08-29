@@ -33,5 +33,5 @@ void compileLessCss(name, stagingDir) {
 
 	String className = 'com.github.grails.lesscss.LessEngineHelper'
 	def helper = Class.forName(className, true, classLoader).newInstance()
-	helper.compileLessCss stagingDir, basedir
+	helper.compileLessCss(stagingDir, basedir, config.ignorePatterns ?: [])
 }

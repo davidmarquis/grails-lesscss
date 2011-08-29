@@ -66,6 +66,16 @@ Attributes:
   A word of caution: This is known to cause browser storage capacity problems if you keep the page open for too long.
   Defaults to `true`.
 
+# Configuration
+
+You can configure plugin in application's grails-app/conf/Config.groovy:
+    // Enable/disable processing of LESS files during WAR build
+    lessCss.enable = true
+
+    // Don't process files matching given Ant-glob patterns.
+    // Useful to prevent processing files which are only used by @import from other LESS files.
+    lessCss.ignorePatterns = [ "css/lib/*.*" ]
+
 # Play nicely with ui-performance
 
 In order for the plug-in to collaborate with ui-performance, the following elements must be taken

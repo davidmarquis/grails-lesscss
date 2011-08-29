@@ -1,26 +1,30 @@
 package com.github.grails.lesscss
 
 import com.asual.lesscss.LessEngine
-
+import org.springframework.util.AntPathMatcher
 
 class LessEngineHelper {
 
-    public void compileLessCss(stagingDir, baseDir) {
+    public void compileLessCss(stagingDir, baseDir, ignorePatterns) {
         println "Compiling LESS files from dir ${stagingDir}"
 
         LessEngine engine = new LessEngine()
         def lessFiles = []
-        
+
+        def matcher = new AntPathMatcher()
+
         stagingDir.eachFileRecurse { file ->
 
             if (file.directory) {
-              return
+                return
             }
 
-            if (file.name.toLowerCase().endsWith(Constants.LESS_EXTENSION)) {
+            if (file.name.toLowerCase().endsWith(Constants.LESS_EXTENSION) &&
+                !ignorePatterns.any { matcher.match(stagingDir.path + File.separator + it, file.path) }) {
+
                 def input = file
                 def output = getOutputFile(file)
-                
+
                 if (!lessFiles.contains(input)) {
                     println "Compiling LESS file [${input}] into [${output}]"
                     engine.compile input, output
@@ -46,7 +50,7 @@ class LessEngineHelper {
 
         file.write(text)
     }
-    
+
     private void removeLessFiles(lessFiles) {
       lessFiles.each{ file -> file.delete() }
     }
