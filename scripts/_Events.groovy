@@ -25,7 +25,7 @@ void compileLessCss(name, stagingDir) {
 	enabled = enabled instanceof Boolean ? enabled : true
 
 	if (!enabled) {
-		println "\nLESS CSS not enabled, not processing .less files.\n"
+		println "\nLESS CSS not enabled, .less files will not be compiled.\n"
 		return
 	}
 

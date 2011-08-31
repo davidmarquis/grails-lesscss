@@ -5,13 +5,13 @@ import org.springframework.util.AntPathMatcher
 
 class LessEngineHelper {
 
+    def matcher = new AntPathMatcher()
+
     public void compileLessCss(stagingDir, baseDir, ignorePatterns) {
         println "Compiling LESS files from dir ${stagingDir}"
 
         LessEngine engine = new LessEngine()
         def lessFiles = []
-
-        def matcher = new AntPathMatcher()
 
         stagingDir.eachFileRecurse { file ->
 
@@ -19,8 +19,7 @@ class LessEngineHelper {
                 return
             }
 
-            if (file.name.toLowerCase().endsWith(Constants.LESS_EXTENSION) &&
-                !ignorePatterns.any { matcher.match(stagingDir.path + File.separator + it, file.path) }) {
+            if (shouldProcess(file, ignorePatterns, stagingDir)) {
 
                 def input = file
                 def output = getOutputFile(file)
@@ -34,6 +33,15 @@ class LessEngineHelper {
             }
         }
         removeLessFiles(lessFiles)
+    }
+
+    private boolean shouldProcess(file, ignorePatterns, stagingDir) {
+        isLessFile(file) &&
+                !ignorePatterns.any { matcher.match(stagingDir.path + File.separator + it, file.path) }
+    }
+
+    private boolean isLessFile(file) {
+        file.name.toLowerCase().endsWith(Constants.LESS_EXTENSION)
     }
 
     private File getOutputFile(File input) {

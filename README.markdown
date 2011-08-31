@@ -68,7 +68,7 @@ Attributes:
 
 # Configuration
 
-You can configure plugin in application's grails-app/conf/Config.groovy:
+You can configure plugin in your application's `grails-app/conf/Config.groovy`:
 
     // Enable/disable processing of LESS files during WAR build
     lessCss.enable = true
@@ -119,5 +119,6 @@ Other contributors:
   * Maxime Lavoie
   * Jorge Silveira
   * David Chau
+  * Vladimir Grichina
 
 # Enjoy responsibly!
